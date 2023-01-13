@@ -575,11 +575,11 @@ bea.methods_jaccard <- function(pred_full, dataset, prediction, paper, consensus
 }
 
 
-bea.jaccard_matrix <- function(common_annot, met, paper){
+bea.jaccard_matrix <- function(common_annot, met, Paper){
 	
 
 	######List of cell type
-	paper_type <- unique(common_annot[, paper]) ######## Depends on the dataset 
+	paper_type <- unique(common_annot[, Paper]) ######## Depends on the dataset 
 	met_type <- unique(common_annot[, met])
 	
 
@@ -592,7 +592,7 @@ bea.jaccard_matrix <- function(common_annot, met, paper){
 	######Jaccard index 
 	for(i in seq_along(paper_type)){
     	for (j in seq_along(met_type)) {
-        	jaccard_mat[i,j] <- jaccard(c(common_annot[, paper] == paper_type[i]), 
+        	jaccard_mat[i,j] <- jaccard(c(common_annot[, Paper] == paper_type[i]), 
         		common_annot[, met] == met_type[j])
     	}
    	}
@@ -972,16 +972,17 @@ bea.barplot.MP.LTS = function(scores, dataset.name, path_save){
 }
 
 
-bea.consensus.aggregate  =function(dataset, common_annot, annot_name, col_name){
+bea.consensus.aggregate  =function(dataset, common_annot, annot_name_2, col_name_2){
 
-	dataset[[annot_name]] <- dataset[["ConsensusHISTO"]]
+	dataset[[annot_name_2]] <- dataset[["ConsensusHISTO"]]
 	for(coln in colnames(dataset)){
-		if(!dataset[[annot_name]][coln,1] %in% c("Solid", "Transition", "Lepidic")){
-			dataset[[annot_name]][coln,1] <- common_annot[coln, col_name]
+		if(!dataset[[annot_name_2]][coln,1] %in% c("Solid", "Transition", "Lepidic")){
+			dataset[[annot_name_2]][coln,1] <- common_annot[coln, col_name_2]
 		}
 	}	
 	return(dataset)
 }
+
 
 bea.barplot.LTS.immune.pertype = function(dataset, dataset.name, path_save, idents){
 	
