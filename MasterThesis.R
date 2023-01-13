@@ -203,6 +203,97 @@ bea.jacc.htmap <- function(path_save, dataset.name, jaccard_list, met, title){
 
 ###################################
 
+consensus <- list("Tcell" = c("CD4_MEMORY_EFFECTOR_T_CELL", "CD4_NAIVE_T_CELL", 
+		"CD8_MEMORY_EFFECTOR_T_CELL","CD8_NAIVE_T_CELL", "NATURAL_KILLER_T_CELL",
+		"PROLIFERATING_NK_T_CELL", "CD8.T.cell.exhausted","CD4.T.cell.exhausted"
+		, "CD8.T.cell.naive" ,"CD8.T.cell.C2.CD28" , "CD8.T.cell.effector"
+		,"CD8.T.cell.GZMK","CD8.T.cell.tissue.resident.memory","CD8.T.cell.MAIT"
+		,"CD4.T.cell.naive", "CD4.T.cell.central.memory.blood","CD4.T.cell.effector"
+		, "CD4.T.cell.CD69","CD4.T.cell.EOMES","CD4.T.cell.GZMA"
+		,"CD4.T.cell.Treg.FOXP3.resting.blood", "CD4.T.cell.Treg.suppressive.CTLA4",
+		"CD4.T.cells","CD8.T.cells","T.cells.proliferating", "Gamma.delta.T.cells",
+		"Natural.killer.T.cells","T.cells","T.cytotoxic.cells","T.follicular.helper.cells",
+		"T.helper.cells","T.memory.cells","T.regulatory.cells", "Conventional.T.cells",
+		"Regulatory.T.cells","CD8..T.cells", "Naive CD8+ T cells","Naive CD4+ T cells",
+		"Memory CD8+ T cells", "Memory CD4+ T cells", "Effector CD8+ T cells" ,
+		"Effector CD4+ T cells" ,"γδ-T cells", "CD8+ NKT-like cells","CD4+ NKT-like cells",
+		"CD4+ T-cells", "CD8+ T-cells", "T_cells", "CD4 T cells", "CD8 T cells"),
+
+	"Bcell" = c("B.cells", "B.cells.memory", "B.cells.naive", "B_CELL", "Pro-B cells",
+		"Pre-B cells","Naive B cells","Memory B cells", "B-cells", "B_cell", "Pre-B_cell_CD34-",
+		"Pro-B_cell_CD34+", "B cells"),
+
+	"NKcell" = c("NK.cells", "NATURAL_KILLER_CELL", "Natural killer  cells", "NK cells",
+		"NK_cell"),
+
+	"MASTcell" = c("Mast.cells", "BASOPHIL_MAST_1_CELL", "BASOPHIL_MAST_2_CELL", "Mast cells"),
+
+	"Macrophage" = c("Alveolar.Macrophages", "Monocyte.derived.macrophages", "Alveolar.Mφ.CCL3.",
+		"Alveolar.Mφ.MT.positive", "Alveolar.Mφ.proliferating", "Monocyte.derived.Mφ",
+		"Interstitial.Mφ.perivascular", "Macrophages", "Red.pulp.macrophages","MACROPHAGE_CELL", 
+		"PROLIFERATING_MACROPHAGE_CELL", "Alveolar macrophages", "Macrophage", "Monocyte-derived Mφ",
+		"Alveolar.macrophages"),
+
+	"Monocyte" = c("Monocytes","CLASSICAL_MONOCYTE_CELL", "NONCLASSICAL_MONOCYTE_CELL", 
+		"OLR1_CLASSICAL_MONOCYTE_CELL", "Classical Monocytes", "Non-classical monocytes",
+		"Classical Monocytes", "Non-classical monocytes", "Intermediate monocytes", "Monocyte", 
+		"Classical.monocytes", "Non.classical.monocytes", "Classical monocytes"),
+
+	"Dcell" = c("Myeloid.dendritic.cells", "Migratory.DCs", "DC1", "DC2", "Dendritic.cells","EREG_DENDRITIC_CELL", 
+		"IGSF21_DENDRITIC_CELL", "MYELOID_DENDRITIC_TYPE_1_CELL", "TREM2_DENDRITIC_CELL",
+		"Myeloid Dendritic cells", "Myeloid Dendritic cells", "DC"),
+
+	"PlasmacytoidDcell" =c("Plasmacytoid.dendritic.cells", "Plasmacytoid.DCs","PLASMACYTOID_DENDRITIC_CELL",
+		"Plasmacytoid Dendritic cells", "Plasmacytoid DCs"),
+
+	"PLASMAcell" = c("Plasma.cells", "Plasma B cells", "Plasma cell", "Plasma cells"),
+
+	"Megakaryocyte" = c("Megakaryocytes", "PLATELET_MEGAKARYOCYTE_CELL", "Platelets", "Megakaryocyte"),
+
+	"MDScell" = c("Myeloid.derived.suppressor.cells"),
+
+	"Endothelial" = c("Endothelial.cells", "Lymphatic.endothelial.cells", "EC.aerocyte.capillary",
+		"EC.venous.systemic", "Lymphatic.EC.mature", "Lymphatic.EC.differentiating",
+		"EC.arterial", "EC.general.capillary", "EC.venous.pulmonary", "Lymphatic.EC.proliferating",
+		"Endothelial", "Erythroid-like and erythroid precursor cells", "Endothelial cell",
+		"Endothelial cells", "Endothelial_cells", "CAPILLARY_CELL", "EC venous systemic", 
+		"EC general capillary"),
+
+	"Epithelial"  = c("Epithelial", "Alveolar.type.2", "Alveolar.type.1", "Basal.cells",
+		"Club.cells", "Ciliated.cells", "Basal.resting", "Deuterosomal", "Goblet..subsegmental.",
+		"Ionocyte", "SMG.mucous", "AT1", "AT2", "AT2.proliferating", "Suprabasal",
+		"Multiciliated..non.nasal.", "Goblet..bronchial.", "Transitional.Club.AT2", "Tuft",
+		"SMG.serous..bronchial.", "SMG.duct", "Airway.epithelial.cells", "Clara.cells",
+		"Ionocytes", "Pulmonary.alveolar.type.I.cells", "Airway.goblet.cells", 
+		"Pulmonary.alveolar.type.II.cells", "Airway epithelial cells", "Airway goblet cells",
+		"Basal cells (Airway progenitor cells)", "Ciliated cells", "Clara cells", "Epithelial cells",
+		"Pulmonary alveolar type I cells", "Pulmonary alveolar type II cells", "Secretory cell",
+		"Epithelial cells", "Keratinocytes", "Melanocytes", "Epithelial_cells", "ALVEOLAR_EPITHELIAL_TYPE_1_CELL",
+		"SIGNALING_ALVEOLAR_EPITHELIAL_TYPE_2_CELL", "GOBLET_CELL", "BASAL_CELL", "MUCOUS_CELL", "CILIATED_CELL",
+		"CLUB_CELL", "Multiciliated (non-nasal)", "Basal resting", "Transitional Club-AT2", "Goblet (nasal)",
+		"Club..non.nasal.","Mesothelial.cells", "Mesothelial cells", "PROXIMAL_CILIATED_CELL"),
+
+	"Fibroblast" = c("Stromal", "Myofibroblasts", "Fibroblasts", "Smooth.muscle.cells", "Adventitial.fibroblasts",
+		"Pericytes", "Fibromyocytes", "Mesothelium", "Peribronchial.fibroblasts",
+		"Alveolar.fibroblasts", "Subpleural.fibroblasts", "Smooth.muscle", "SM.activated.stress.response", 
+		"Myocytes", "Pericytes", "Smooth muscle", "Skeletal muscle", "Smooth_muscle_cells",
+		"Chondrocytes", "VASCULAR_SMOOTH_MUSCLE_CELL", "ADVENTITIAL_FIBROBLAST_CELL", "Adventitial fibroblasts",
+		"Alveolar fibroblasts", "ALVEOLAR_FIBROBLAST_CELL", "FIBROMYOCYTE_CELL"),
+
+	"Neuron_Glia" = c("Neuroendocrine", "Neurons", "Astrocytes", "Astrocyte", "Neuroepithelial_cell", "NEUROENDOCRINE_CELL"),
+	"Basophils" = c("Basophils"),
+	"Eosinophils" = c("Eosinophils"),
+	"Neutrophils" = c("Neutrophils", "Granulocytes", "Myelocyte", "Pro-Myelocyte"),
+	"Nuocytes" = c("Nuocytes"),
+	"RedBloobCell" = c("Erythroid-like and erythroid precursor cells", "Erythrocytes", "Erythroblast"),
+	"HematopoieticStemCell" = c("HSC/MPP cells", "HSC_-G-CSF", "HSC_CD34", "HSC"), 
+	"PrecusorCell" = c("Progenitor cells", "MSC", "MEP", "BM & Prog.", "Tissue_stem_cells", 
+		"BM", "iPS_cells", "GMP", "CMP"), 
+	"VariousCell" = c("Mesangial", "Adipocytes", "Gametocytes", "Embryonic_stem_cells", 
+		"Osteoblasts", "Hepatocytes"),
+	"Immune" = c("Immune system cells", "ISG expressing immune cells"))
+
+
 bea.consensus.annot = function(dataset, path_save, pred_full, consensus){
 	pred_full <- pred_full[ !pred_full$ref %in% c("level_1", "level_2", "level_3", "level_5", "level_4", "Guo"), ] 
 	pred_full$met_ref <- paste0(pred_full$method, "_", pred_full$ref)
